@@ -2,16 +2,18 @@
 
 import fs from 'fs';
 import debug from 'debug';
+import Store from './base';
 
 const log = debug('iget:store:local');
 
-class LocalStore {
+class LocalStore extends Store {
 
     constructor({file, debug=false}) {
+        super();
         this._checkFile(file);
         this._debug = debug;
         this._file = file;
-        this.update();
+        this.fetched = this.update();
         log(`created in ${debug?'debug':'production'} mode with file ${file}`);
     }
 
@@ -33,27 +35,6 @@ class LocalStore {
             this._data = require(this._file);
         }
         log(`loaded locales from ${this._file} `, this._data);
-    }
-
-    dic(lang, str) {
-        if (!str) {
-            return this.dic('en', arguments[0]);
-        } else {
-            return this._data[`${lang}_${str}`] || {};
-        }
-    }
-
-    /**
-     * Возвращает перевод строки
-     * @param fromLang Язык строки-источника
-     * @param fromStr Строка для перевода
-     * @param toLang Язык перевода
-     */
-    get(fromLang, fromStr, toLang) {
-        if (arguments.length !== 3) {
-            throw new Error('must call with 3 arguments');
-        }
-        return this.dic(fromLang, fromStr)[toLang] || fromStr;
     }
 }
 

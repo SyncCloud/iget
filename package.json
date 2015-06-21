@@ -12,8 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "babel-runtime": "^5.4.7",
+    "bluebird": "^2.9.30",
     "debug": "^2.2.0",
-    "lodash": "^3.9.3"
+    "lodash": "^3.9.3",
+    "request": "^2.58.0"
   },
   "devDependencies": {
     "babel": "^5.4.7",
