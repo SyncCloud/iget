@@ -17,8 +17,9 @@ class Translator {
                 return this.translate.apply(this, [lang].concat(args))
             };
         });
+        //immutable
         this.translate.lang = (toLang) => {
-            this._resultLang = toLang;
+            return new Translator({store: this._store, lang: toLang, locales}).translate;
         }
     }
     translate(strLang, str) {

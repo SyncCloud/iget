@@ -45,8 +45,9 @@ var Translator = (function () {
                     return _this.translate.apply(_this, [lang].concat(args));
                 };
             });
+            //immutable
             this.translate.lang = function (toLang) {
-                _this._resultLang = toLang;
+                return new Translator({ store: _this._store, lang: toLang, locales: locales }).translate;
             };
         }
     }, {

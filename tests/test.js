@@ -8,11 +8,11 @@ describe('iget', function () {
     const dic = require('./dic');
 
     it('should switch between langs', function *() {
-        const iget = yield i18n({file: path.join(__dirname, 'dic.json')});
+        let iget = yield i18n({file: path.join(__dirname, 'dic.json')});
 
         expect(iget.ru('Привет')).to.equal('Hi');
         expect(iget('Cancel')).to.equal('Cancel');
-        iget.lang('ru');
+        iget = iget.lang('ru'); //immutable
         expect(iget.ru('Привет')).to.equal('Привет');
         expect(iget('Cancel')).to.equal('Отмена');
     });
