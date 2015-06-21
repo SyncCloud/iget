@@ -35,7 +35,7 @@ var Translator = (function () {
             var _this = this;
 
             this.translate = this.translate.bind(this);
-
+            this.translate._store = this._store; //for test purposes
             locales.forEach(function (lang) {
                 _this.translate[lang] = function () {
                     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
@@ -63,6 +63,8 @@ var Translator = (function () {
     return Translator;
 })();
 
+var STORE_CACHE = {};
+
 exports['default'] = function (_ref2) {
     var store = _ref2.store;
     var file = _ref2.file;
@@ -76,7 +78,12 @@ exports['default'] = function (_ref2) {
     if (!store && file) {
         store = new _store.LocalStore({ file: file });
     } else if (!store && url && project) {
-        store = new _store.RemoteStore({ url: url, project: project });
+        if (STORE_CACHE[url + project]) {
+            store = STORE_CACHE[url + project];
+        } else {
+            store = new _store.RemoteStore({ url: url, project: project });
+            STORE_CACHE[url + project] = store;
+        }
     } else if (!store) {
         throw new Error('store should be defined or file/url parameter');
     }
