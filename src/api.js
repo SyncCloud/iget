@@ -41,6 +41,9 @@ class Client {
         }).get(1).then((data) => {
             log(`returned from POST ${url} `, data);
             return data;
+        }).catch((err) => {
+            log(`captured error in POST ${url} `, err);
+            throw err;
         });
     }
 
@@ -57,6 +60,9 @@ class Client {
         }).get(1).then((data) => {
             log(`returned from GET ${url} `, data);
             return data;
+        }).catch((err) => {
+            log(`captured error in GET ${url} `, err);
+            throw err;
         });
     }
 }

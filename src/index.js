@@ -50,9 +50,10 @@ export default function({store, file, url, project, locales=['en', 'ru'], lang='
     const tr = new Translator({locales, lang, store});
 
     if (store.fetched && store.fetched.then) {
-        return store.fetched.then(() => {
-            return tr.translate;
-        })
+        return store.fetched
+            .then(() => {
+                return tr.translate;
+            });
     } else {
         return Promise.resolve(tr.translate);
     }

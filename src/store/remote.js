@@ -16,7 +16,7 @@ class RemoteStore extends Store {
             for (let item of items) {
                 this._data[item.keyLocale + '_' +item.key] = item.translations;
             }
-        })
+        });
     }
     get(fromLang, fromStr, toLang) {
         return super.get.apply(this, arguments);
