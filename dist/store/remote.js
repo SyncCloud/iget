@@ -1,20 +1,18 @@
 'use strict';
 
-var _inherits = require('babel-runtime/helpers/inherits')['default'];
-
 var _get = require('babel-runtime/helpers/get')['default'];
+
+var _inherits = require('babel-runtime/helpers/inherits')['default'];
 
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
 
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
 
-var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
-
 var _getIterator = require('babel-runtime/core-js/get-iterator')['default'];
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
-_Object$defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
@@ -27,8 +25,10 @@ var _base = require('./base');
 var _base2 = _interopRequireDefault(_base);
 
 var RemoteStore = (function (_Store) {
+    _inherits(RemoteStore, _Store);
+
     function RemoteStore() {
-        var _ref = arguments[0] === undefined ? {} : arguments[0];
+        var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
         var url = _ref.url;
         var project = _ref.project;
@@ -40,14 +40,12 @@ var RemoteStore = (function (_Store) {
         this.fetched = this.update();
     }
 
-    _inherits(RemoteStore, _Store);
-
     _createClass(RemoteStore, [{
         key: 'update',
         value: function update() {
             var _this = this;
 
-            var _ref2 = arguments[0] === undefined ? {} : arguments[0];
+            var _ref2 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
             var url = _ref2.url;
             var project = _ref2.project;

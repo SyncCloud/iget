@@ -17,7 +17,7 @@ describe('iget', function () {
         expect(iget('Cancel')).to.equal('Отмена');
     });
 
-    describe('remote store', function() {
+    describe.skip('remote store', function() {
         const url = 'http://localhost:3000';
         const project = 'iget-tests';
 

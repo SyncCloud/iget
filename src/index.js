@@ -3,9 +3,10 @@
 import {LocalStore, RemoteStore} from './store';
 
 class Translator {
-    constructor({store, locales=[], lang='en'}) {
+    constructor({store, locales=[], lang='en', stringsLang='en'}) {
         this._store = store;
         this._resultLang = lang;
+        this._defaultStringsLang = stringsLang;
         this.extendTranslateMethods(locales);
     }
 
@@ -25,7 +26,7 @@ class Translator {
     translate(strLang, str) {
         if (arguments.length == 1) {
             str = strLang;
-            strLang = 'en';
+            strLang = this._defaultStringsLang;
         }
         return this._store.get(strLang, str, this._resultLang);
     }
@@ -33,7 +34,7 @@ class Translator {
 
 const STORE_CACHE = {};
 
-export default function({store, file, url, project, locales=['en', 'ru'], lang='en'}) {
+export default function({store, file, url, project, stringsLang, locales=['en', 'ru'], lang='en'}) {
     if (!store && file) {
         store = new LocalStore({file});
     } else if (!store && url && project) {
@@ -47,7 +48,7 @@ export default function({store, file, url, project, locales=['en', 'ru'], lang='
         throw new Error('store should be defined or file/url parameter')
     }
 
-    const tr = new Translator({locales, lang, store});
+    const tr = new Translator({locales, lang, store, stringsLang});
 
     if (store.fetched && store.fetched.then) {
         return store.fetched

@@ -4,15 +4,13 @@ var _createClass = require('babel-runtime/helpers/create-class')['default'];
 
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
 
-var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
-
-_Object$defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
 var Store = (function () {
     function Store() {
-        var _ref = arguments[0] === undefined ? {} : arguments[0];
+        var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
         var data = _ref.data;
 
@@ -24,7 +22,7 @@ var Store = (function () {
     _createClass(Store, [{
         key: 'update',
         value: function update() {
-            var _ref2 = arguments[0] === undefined ? {} : arguments[0];
+            var _ref2 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
             var data = _ref2.data;
 
@@ -36,7 +34,7 @@ var Store = (function () {
             if (!str) {
                 return this.dic('en', arguments[0]);
             } else {
-                return this._data['' + lang + '_' + str] || {};
+                return this._data[lang + '_' + str] || {};
             }
         }
     }, {

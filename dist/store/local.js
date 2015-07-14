@@ -1,18 +1,16 @@
 'use strict';
 
-var _inherits = require('babel-runtime/helpers/inherits')['default'];
-
 var _get = require('babel-runtime/helpers/get')['default'];
+
+var _inherits = require('babel-runtime/helpers/inherits')['default'];
 
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
 
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
 
-var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
-
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
-_Object$defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
@@ -31,6 +29,8 @@ var _base2 = _interopRequireDefault(_base);
 var log = (0, _debug2['default'])('iget:store:local');
 
 var LocalStore = (function (_Store) {
+    _inherits(LocalStore, _Store);
+
     function LocalStore(_ref) {
         var file = _ref.file;
         var _ref$debug = _ref.debug;
@@ -45,8 +45,6 @@ var LocalStore = (function (_Store) {
         this.fetched = this.update();
         log('created in ' + (debug ? 'debug' : 'production') + ' mode with file ' + file);
     }
-
-    _inherits(LocalStore, _Store);
 
     _createClass(LocalStore, [{
         key: '_checkFile',

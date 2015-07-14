@@ -4,11 +4,9 @@ var _createClass = require('babel-runtime/helpers/create-class')['default'];
 
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
 
-var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
-
 var _Promise = require('babel-runtime/core-js/promise')['default'];
 
-_Object$defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
@@ -21,11 +19,14 @@ var Translator = (function () {
         var locales = _ref$locales === undefined ? [] : _ref$locales;
         var _ref$lang = _ref.lang;
         var lang = _ref$lang === undefined ? 'en' : _ref$lang;
+        var _ref$stringsLang = _ref.stringsLang;
+        var stringsLang = _ref$stringsLang === undefined ? 'en' : _ref$stringsLang;
 
         _classCallCheck(this, Translator);
 
         this._store = store;
         this._resultLang = lang;
+        this._defaultStringsLang = stringsLang;
         this.extendTranslateMethods(locales);
     }
 
@@ -55,7 +56,7 @@ var Translator = (function () {
         value: function translate(strLang, str) {
             if (arguments.length == 1) {
                 str = strLang;
-                strLang = 'en';
+                strLang = this._defaultStringsLang;
             }
             return this._store.get(strLang, str, this._resultLang);
         }
@@ -71,6 +72,7 @@ exports['default'] = function (_ref2) {
     var file = _ref2.file;
     var url = _ref2.url;
     var project = _ref2.project;
+    var stringsLang = _ref2.stringsLang;
     var _ref2$locales = _ref2.locales;
     var locales = _ref2$locales === undefined ? ['en', 'ru'] : _ref2$locales;
     var _ref2$lang = _ref2.lang;
@@ -89,7 +91,7 @@ exports['default'] = function (_ref2) {
         throw new Error('store should be defined or file/url parameter');
     }
 
-    var tr = new Translator({ locales: locales, lang: lang, store: store });
+    var tr = new Translator({ locales: locales, lang: lang, store: store, stringsLang: stringsLang });
 
     if (store.fetched && store.fetched.then) {
         return store.fetched.then(function () {
