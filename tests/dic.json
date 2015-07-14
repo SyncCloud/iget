@@ -1,8 +1,14 @@
 {
   "en_Cancel": {
-    "ru": "Отмена"
+    "ru": "Отмена",
+    "de": "Stornierung"
   },
   "ru_Привет": {
-    "en": "Hi"
+    "en": "Hi",
+    "de": "Hallo"
+  },
+  "de_Wiedersehen": {
+    "en": "Bye",
+    "ru": "Пока"
   }
 }

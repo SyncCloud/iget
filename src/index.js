@@ -20,7 +20,7 @@ class Translator {
         });
         //immutable
         this.translate.lang = (toLang) => {
-            return new Translator({store: this._store, lang: toLang, locales}).translate;
+            return new Translator({store: this._store, lang: toLang, locales, stringsLang: this._defaultStringsLang}).translate;
         }
     }
     translate(strLang, str) {

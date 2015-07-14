@@ -17,6 +17,18 @@ describe('iget', function () {
         expect(iget('Cancel')).to.equal('Отмена');
     });
 
+    it('should use default strings lang', function *() {
+        let iget = yield i18n({file: path.join(__dirname, 'dic.json'), stringsLang: 'ru', locales: ['ru', 'en', 'de']});
+
+        expect(iget('Привет')).to.equal('Hi');
+        expect(iget.en('Cancel')).to.equal('Cancel');
+        iget = iget.lang('ru'); //immutable
+        expect(iget('Привет')).to.equal('Привет');
+        expect(iget.en('Cancel')).to.equal('Отмена');
+        iget = iget.lang('de'); //immutable
+        expect(iget('Привет')).to.equal('Hallo');
+    });
+
     describe.skip('remote store', function() {
         const url = 'http://localhost:3000';
         const project = 'iget-tests';
