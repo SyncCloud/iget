@@ -15,7 +15,8 @@
     "bluebird": "^2.9.30",
     "debug": "^2.2.0",
     "lodash": "^3.9.3",
-    "request": "^2.58.0"
+    "request": "^2.58.0",
+    "sprintf": "^0.1.5"
   },
   "devDependencies": {
     "babel": "^5.4.7",

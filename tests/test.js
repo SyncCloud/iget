@@ -29,7 +29,13 @@ describe('iget', function () {
         expect(iget('Привет')).to.equal('Hallo');
     });
 
-    describe.skip('remote store', function() {
+    it('should support formatting', function *() {
+        let iget = yield i18n({file: path.join(__dirname, 'dic.json')});
+
+        expect(iget.ru('Привет, %s', 'Nick')).to.equal('Hi, Nick');
+    });
+
+    describe('remote store', function() {
         const url = 'http://localhost:3000';
         const project = 'iget-tests';
 

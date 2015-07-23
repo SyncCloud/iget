@@ -1,36 +1,7 @@
 'use strict';
 
-import {LocalStore, RemoteStore} from './store';
-
-class Translator {
-    constructor({store, locales=[], lang='en', stringsLang='en'}) {
-        this._store = store;
-        this._resultLang = lang;
-        this._defaultStringsLang = stringsLang;
-        this.extendTranslateMethods(locales);
-    }
-
-    extendTranslateMethods(locales) {
-        this.translate = this.translate.bind(this);
-        this.translate._store = this._store; //for test purposes
-        locales.forEach((lang) => {
-            this.translate[lang] = (...args) => {
-                return this.translate.apply(this, [lang].concat(args))
-            };
-        });
-        //immutable
-        this.translate.lang = (toLang) => {
-            return new Translator({store: this._store, lang: toLang, locales, stringsLang: this._defaultStringsLang}).translate;
-        }
-    }
-    translate(strLang, str) {
-        if (arguments.length == 1) {
-            str = strLang;
-            strLang = this._defaultStringsLang;
-        }
-        return this._store.get(strLang, str, this._resultLang);
-    }
-}
+import {LocalStore, RemoteStore} from './store/index';
+import {vsprintf} from 'sprintf';
 
 const STORE_CACHE = {};
 
@@ -48,15 +19,51 @@ export default function({store, file, url, project, stringsLang, locales=['en', 
         throw new Error('store should be defined or file/url parameter')
     }
 
-    const tr = new Translator({locales, lang, store, stringsLang});
+    const translate = translator({locales, lang, store, stringsLang});
 
     if (store.fetched && store.fetched.then) {
         return store.fetched
             .then(() => {
-                return tr.translate;
+                return translate;
             });
     } else {
-        return Promise.resolve(tr.translate);
+        return Promise.resolve(translate);
     }
+}
+
+function translator({store, locales=[], lang='en', stringsLang='en'}) {
+    let fn = translate.bind(this, stringsLang);
+
+    //fill with language extensions .en, .de and etc
+    locales.forEach((lang) => {
+        fn[lang] = (...args) => {
+            return translate.apply(this, [lang].concat(args))
+        };
+    });
+
+    fn._store = store; //for test purposes
+
+    //switch translation language is IMMUTABLE
+    fn.lang = (toLang) => {
+        return translator({store, lang: toLang, locales, stringsLang});
+    };
+
+    return fn;
+
+    function translate(strLang, str) {
+        const translated = store.get(strLang, str, lang);
+        if (arguments.length > 2) {
+            const args = new Array(arguments.length - 2);
+
+            for (var i = 0; i < arguments.length - 2; i++) {
+                args[i] = arguments[i + 2];
+            }
+
+            return vsprintf(translated, args)
+        } else {
+            return translated;
+        }
+    }
+
 
 }
