@@ -1,11 +1,12 @@
 {
-  "name": "iget",
+  "name": "@synccloud/iget",
   "version": "0.1.0",
   "description": "Localization manager",
   "main": "dist/index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha ./tests/test.js --require ./tests/index.js",
-    "build": "node_modules/.bin/babel --optional runtime -d dist/ src/"
+    "test": "node_modules/.bin/mocha",
+    "build": "node_modules/.bin/babel --optional runtime -d dist/ src/",
+    "prepublish": "npm run build"
   },
   "keywords": [],
   "author": "Nick Delitski <ndelitski@gmail.com>",
