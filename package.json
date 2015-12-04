@@ -1,11 +1,11 @@
 {
-  "name": "@synccloud/iget",
+  "name": "iget",
   "version": "0.1.0",
   "description": "Localization manager",
   "main": "dist/index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha",
-    "build": "node_modules/.bin/babel --optional runtime -d dist/ src/",
+    "test": "node_modules/.bin/mocha test/*",
+    "build": "node_modules/.bin/babel -d dist/ src/ --optional runtime",
     "prepublish": "npm run build"
   },
   "keywords": [],
@@ -23,12 +23,6 @@
     "babel": "^5.4.7",
     "chai": "^2.3.0",
     "co-mocha": "^1.1.0",
-    "ghooks": "^0.3.2",
     "mocha": "^2.2.5"
-  },
-  "config": {
-    "ghooks": {
-      "pre-commit": "npm run build && npm run test && git add dist"
-    }
   }
 }
