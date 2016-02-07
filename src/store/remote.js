@@ -4,13 +4,13 @@ import api from '../api';
 import Store from './base';
 
 class RemoteStore extends Store {
-    constructor({url, project}={}) {
+    constructor({host, project}={}) {
         super();
-        this._client = api({url, project});
+        this._client = api({host, project});
         this.fetched = this.update();
     }
-    update({url, project}={}) {
-        this._client.configure({url, project});
+    update({host, project}={}) {
+        this._client.configure({host, project});
         return this._client.pull().then((items)=>{
             this._data = {};
             for (let item of items) {

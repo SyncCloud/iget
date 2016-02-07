@@ -1,5 +1,3 @@
-'use strict';
-
 import i18n from '../src/index';
 import path from 'path';
 import api from '../src/api';
@@ -7,8 +5,8 @@ import api from '../src/api';
 describe('iget', function () {
     const dic = require('./dic');
 
-    it('should switch between langs', function *() {
-        let iget = yield i18n({file: path.join(__dirname, 'dic.json')});
+    it('should switch between langs', async function() {
+        let iget = await i18n({file: path.join(__dirname, 'dic.json')});
 
         expect(iget.ru('Привет')).to.equal('Hi');
         expect(iget('Cancel')).to.equal('Cancel');
@@ -17,8 +15,8 @@ describe('iget', function () {
         expect(iget('Cancel')).to.equal('Отмена');
     });
 
-    it('should use default strings lang', function *() {
-        let iget = yield i18n({file: path.join(__dirname, 'dic.json'), stringsLang: 'ru', locales: ['ru', 'en', 'de']});
+    it('should use default strings lang', async function() {
+        let iget = await i18n({file: path.join(__dirname, 'dic.json'), stringsLang: 'ru', locales: ['ru', 'en', 'de']});
 
         expect(iget('Привет')).to.equal('Hi');
         expect(iget.en('Cancel')).to.equal('Cancel');
@@ -29,43 +27,43 @@ describe('iget', function () {
         expect(iget('Привет')).to.equal('Hallo');
     });
 
-    it('should support formatting', function *() {
-        let iget = yield i18n({file: path.join(__dirname, 'dic.json')});
+    it('should support formatting', async function() {
+        let iget = await i18n({file: path.join(__dirname, 'dic.json')});
 
         expect(iget.ru('Привет, %s', 'Nick')).to.equal('Hi, Nick');
     });
 
-    describe.skip('remote store', function() {
-        const url = 'http://localhost:3000';
+    describe('remote store', function() {
+        const host = 'http://localhost:3000';
         const project = 'iget-tests';
 
-        before(function *() {
-            yield api({url, project}).push({
+        before(async function() {
+            await api({host, project}).push({
                 en: {
                     'Hi': {}
                 }
             });
         });
 
-        it('should tranlate Hi to Hi', function *() {
-            const iget = yield i18n({url, project});
+        it('should tranlate Hi to Hi', async function() {
+            const iget = await i18n({host, project});
 
             expect(iget('Hi')).to.equal('Hi');
         });
 
-        it('should reuse stores with same url&project', function *() {
-            const iget1 = yield i18n({url, project});
-            const iget2 = yield i18n({url, project});
+        it('should reuse stores with same url&project', async function() {
+            const iget1 = await i18n({host, project});
+            const iget2 = await i18n({host, project});
         	assert(iget1._store === iget2._store, 'stores instances must be the same')
         });
 
     });
 
-    it('should fail init without store', function *() {
+    it('should fail init without store', async function() {
 
     });
 
-    it('should init with custom store', function *() {
+    it('should init with custom store', async function() {
 
     });
 });

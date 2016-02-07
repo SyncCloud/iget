@@ -4,7 +4,7 @@
   "description": "Localization manager",
   "main": "dist/index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha test/*",
+    "test": "node_modules/.bin/mocha $(find test -name *.spec.es6)",
     "build": "node_modules/.bin/babel -d dist/ src/ --optional runtime",
     "prepublish": "npm run build"
   },
@@ -12,7 +12,7 @@
   "author": "Nick Delitski <ndelitski@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "babel-runtime": "^5.4.7",
+    "babel-runtime": "^5.8.33",
     "bluebird": "^2.9.30",
     "debug": "^2.2.0",
     "lodash": "^3.9.3",
@@ -21,8 +21,9 @@
   },
   "devDependencies": {
     "babel": "^5.4.7",
+    "babel-core": "^5.8.33",
     "chai": "^2.3.0",
-    "co-mocha": "^1.1.0",
+    "chai-register": "0.0.1",
     "mocha": "^2.2.5"
   }
 }

@@ -1,5 +1,3 @@
-'use strict';
-
 import $url from 'url';
 import $q from 'bluebird';
 import debug from 'debug';
@@ -12,15 +10,15 @@ export default function(options) {
 }
 
 class Client {
-    constructor({url, project}) {
-        if (!url || !project) {
+    constructor({host, project}) {
+        if (!host || !project) {
             throw new Error('url or project must be defined');
         }
-        this.configure({url, project});
+        this.configure({host, project});
     }
-    configure({url, project}) {
-        if (url) {
-            this._baseUrl = url;
+    configure({host, project}) {
+        if (host) {
+            this._baseUrl = host.match(/^http/) ? host : 'http://' + host;
         }
         if (project) {
             this._project = project;
