@@ -33,7 +33,7 @@ describe('iget', function () {
         expect(iget.ru('Привет, %s', 'Nick')).to.equal('Hi, Nick');
     });
 
-    describe('remote store', function() {
+    describe.skip('remote store', function() {
         const host = 'http://localhost:3000';
         const project = 'iget-tests';
 
