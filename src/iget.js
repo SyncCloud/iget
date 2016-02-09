@@ -64,7 +64,7 @@ iget.local = async function ({file, debug, ...other} = {}) {
 };
 
 iget.remote = async function (options = {}) {
-  const {host, port, project, ...other} = _.merge({}, config.globalConfig.server || {}, options);
+  const {host, port, project, ...other} = _.merge({}, iget.globalConfig.server || {}, options);
   assert(host, '`host` option is expected');
   assert(project, '`project` option is expected');
 
