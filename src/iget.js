@@ -3,6 +3,7 @@ import FileStore from './store/file';
 import RemoteStore from './store/remote';
 import config from './configuration';
 import translator from './translator';
+import Client from './remote-client';
 
 /**
  *
@@ -15,7 +16,7 @@ import translator from './translator';
  * @returns {Promise}
  */
 async function iget(options = {}) {
-  options = _.merge({}, config.defaults, config.fetchSideBySide() || config.fetchPackageJson(), options);
+  options = _.merge({}, iget.config, options);
 
   let {
     store,
@@ -37,19 +38,30 @@ async function iget(options = {}) {
   return translate;
 }
 
-iget.local = async function ({file, debug, ...other} = {}) {
+iget.config = _.merge({}, config.defaults, config.fetchSideBySide() || config.fetchPackageJson());
+
+iget.local = async function (options = {}) {
+  const {file, debug, ...other} = _.merge({}, config.options, options);
   assert(file, '`file` option is expected');
+
   const store = new FileStore({file, debug});
 
   return iget({store, ...other});
 };
 
-iget.remote = async function ({host, port, project, ...other} = {}) {
+iget.remote = async function (options = {}) {
+  const {host, port, project, ...other} = _.merge({}, config.options, options);
   assert(host, '`host` option is expected');
   assert(project, '`project` option is expected');
+
   const store = new RemoteStore({host, port, project});
 
   return iget({store, ...other});
+};
+
+iget.createRemoteClient = function (options) {
+  options = _.merge({}, iget.config, options);
+  return new Client(_.pick(options, 'host', 'port', 'project', 'auth'));
 };
 
 export default iget;
