@@ -4,6 +4,7 @@ import RemoteStore from './store/remote';
 import config from './configuration';
 import translator from './translator';
 import Client from './remote-client';
+import extract from './extract';
 
 /**
  *
@@ -16,7 +17,7 @@ import Client from './remote-client';
  * @returns {Promise}
  */
 async function iget(options = {}) {
-  options = _.merge({}, iget.config, options);
+  options = _.merge({}, _.omit(iget.globalConfig, 'server', 'store'), options);
 
   let {
     store,
@@ -38,10 +39,23 @@ async function iget(options = {}) {
   return translate;
 }
 
-iget.config = _.merge({}, config.defaults, config.fetchSideBySide() || config.fetchPackageJson());
+iget.extract = function(content, options = {}) {
+  return extract(_.merge({defaultKeysLanguage: iget.globalConfig.defaultKeysLanguage}, options))(content);
+};
 
-iget.local = async function (options = {}) {
-  const {file, debug, ...other} = _.merge({}, config.options, options);
+iget.globalConfig = _.merge({}, config.defaults, config.fetchSideBySide() || config.fetchPackageJson());
+
+iget.mergeGlobalConfig = function (conf = {}) {
+  _.merge(iget.globalConfig, conf);
+};
+
+iget.setGlobalConfig = function (conf) {
+  if (conf) {
+    iget.globalConfig = conf;
+  }
+};
+
+iget.local = async function ({file, debug, ...other} = {}) {
   assert(file, '`file` option is expected');
 
   const store = new FileStore({file, debug});
@@ -50,7 +64,7 @@ iget.local = async function (options = {}) {
 };
 
 iget.remote = async function (options = {}) {
-  const {host, port, project, ...other} = _.merge({}, config.options, options);
+  const {host, port, project, ...other} = _.merge({}, config.globalConfig.server || {}, options);
   assert(host, '`host` option is expected');
   assert(project, '`project` option is expected');
 
@@ -60,7 +74,7 @@ iget.remote = async function (options = {}) {
 };
 
 iget.createRemoteClient = function (options) {
-  options = _.merge({}, iget.config, options);
+  options = _.merge({}, iget.globalConfig.server || {}, options);
   return new Client(_.pick(options, 'host', 'port', 'project', 'auth'));
 };
 

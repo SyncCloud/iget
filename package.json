@@ -1,8 +1,8 @@
 {
   "name": "iget",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Localization manager",
-  "main": "dist/index.js",
+  "main": "dist/iget.js",
   "scripts": {
     "test": "node_modules/.bin/mocha $(find test -name *.spec.es6)",
     "build": "node_modules/.bin/babel -d dist/ src/ --optional runtime",
