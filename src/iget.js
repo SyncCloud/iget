@@ -5,6 +5,7 @@ import config from './configuration';
 import translator from './translator';
 import Client from './remote-client';
 import extract from './extract';
+import assert from 'assert';
 
 /**
  *
