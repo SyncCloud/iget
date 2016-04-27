@@ -65,11 +65,11 @@ iget.local = async function ({file, debug, ...other} = {}) {
 };
 
 iget.remote = async function (options = {}) {
-  const {host, port, project, ...other} = _.merge({}, iget.globalConfig.server || {}, options);
+  const {host, port, project, user, password, ...other} = _.merge({}, iget.globalConfig.server || {}, options);
   assert(host, '`host` option is expected');
   assert(project, '`project` option is expected');
 
-  const store = new RemoteStore({host, port, project});
+  const store = new RemoteStore({host, port, project, auth: {user, password}});
 
   return iget({store, ...other});
 };
