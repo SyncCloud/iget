@@ -69,7 +69,7 @@ iget.remote = async function (options = {}) {
   assert(host, '`host` option is expected');
   assert(project, '`project` option is expected');
 
-  const store = new RemoteStore({host, port, project, auth: {user, password}});
+  const store = new RemoteStore({host, port, project, auth: user ? {user, password} : undefined});
 
   return iget({store, ...other});
 };
